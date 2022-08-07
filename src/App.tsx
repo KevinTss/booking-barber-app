@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useAuth, useLogout } from "./hooks";
-import {LoginPage, SignUpPage} from './routes'
+import {LoginPage, SignUpPage, AdminPage} from './routes'
 
 export const App = () => {
   const auth = useAuth()
@@ -18,6 +18,7 @@ export const App = () => {
         </>}  />
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/sign-up" element={<SignUpPage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
       </Routes>
     </div>
   );
