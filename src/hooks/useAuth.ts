@@ -19,8 +19,6 @@ export const useAuth = () => {
             setUser(firebaseUser)
             setIsLoading(false);
     
-            // fetch(firebaseUser.email as string).then(() => setIsLoading(false));
-    
             return unsubscribe;
           }
         );
