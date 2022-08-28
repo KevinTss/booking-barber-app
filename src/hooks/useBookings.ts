@@ -8,28 +8,37 @@ type Booking = {
   customerId: string
 }
 
-export const useBookings = () => {
-    const {data, isLoading} = useQuery(['bookings'], () => new Promise((resolve, reject) => {
-      const query = fireStore.query(
-        fireStore.collection(fireStore.getFirestore(), 'bookings'),
-        // fireStore.where('isArchived', '!=', true)
-      );
+type UseBookingsParams = {
+  enabled: boolean;
+};
 
-      fireStore.onSnapshot(query, (querySnapshot) => {
-        const result: Booking[] = [];
-        querySnapshot.forEach((doc) => {
-          result.push({
-            id: doc.id,
-            ...doc.data(),
-          } as Booking);
-        })
-        resolve(result)
-      })
+export const useBookings = ({ enabled }: UseBookingsParams) => {
+  const { data, isLoading } = useQuery(
+    ['bookings'],
+    () =>
+      new Promise((resolve, reject) => {
+        const query = fireStore.query(
+          fireStore.collection(fireStore.getFirestore(), 'bookings')
+        );
 
-    }))
-  
-    return { 
-      bookings: data as Booking[],
-      isLoading
+        fireStore.onSnapshot(query, (querySnapshot) => {
+          const result: Booking[] = [];
+          querySnapshot.forEach((doc) => {
+            result.push({
+              id: doc.id,
+              ...doc.data(),
+            } as Booking);
+          });
+          resolve(result);
+        });
+      }),
+    {
+      enabled,
     }
-}
+  );
+
+  return {
+    bookings: data as Booking[],
+    isLoading,
+  };
+};

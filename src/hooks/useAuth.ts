@@ -13,7 +13,6 @@ export const useAuth = () => {
       firebaseAuth.getAuth(),
       (firebaseUser) => {
         if (!firebaseUser) {
-          console.log('no firebaseUser', firebaseUser);
           setIsLoading(false);
           return;
         }

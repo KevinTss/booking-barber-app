@@ -1,7 +1,9 @@
-import {useBookings} from "../hooks"
+import { useAuth, useBookings, useUnAuthOnly } from "../hooks"
 
 export const AdminPage = () => {
-  const {isLoading, bookings} = useBookings()
+  useUnAuthOnly()
+  const { user } = useAuth()
+  const { isLoading, bookings } = useBookings({ enabled: !!user })
 
     return (
       <main>
