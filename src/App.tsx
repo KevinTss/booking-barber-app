@@ -3,25 +3,22 @@ import { useAuth, useLogout } from "./hooks";
 import {LoginPage, SignUpPage, AdminPage} from './routes'
 
 export const App = () => {
-  const auth = useAuth()
+  const { isLoading, user, called } = useAuth()
   const logout = useLogout()
 
-  if (auth.isLoading) return <p>loading</p>
+  if (!called || isLoading) return <p>loading</p>
   
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<>
-          <p>coucou</p>
-          {!auth.user && <Link to='/login'>Login</Link>}
-          {auth.user && <button onClick={logout}>Logout</button>}
-        </>}  />
-        <Route path="/login" element={<LoginPage/>} />
-        <Route path="/sign-up" element={<SignUpPage/>} />
-        <Route path="/admin" element={<AdminPage/>} />
+          {!user && <Link to='/login'>Login</Link>}
+          <button onClick={logout}>Logout</button>
+        </>} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
     </div>
   );
 }
-
- 
